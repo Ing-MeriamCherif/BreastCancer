@@ -1,0 +1,44 @@
+# Recommended protocol for all new experiments (E1-E3).
+seed: 42
+data:
+  records: data/records.csv        # scripts/audit_data.py (robust resolver)
+  input: crop                      # crop | ctx1.5 | ctx2.0 (cache variant)
+  full_input: null                 # set to "full" for the whole-breast density stream
+  cache_root: cache
+  cache_size: 512
+  legacy_split: false              # official test set kept intact
+cv: {n_folds: 5, method: stratified_group}
+model:
+  backbone: timm:efficientnet_b3.ra2_in1k
+  image_size: 512
+  finetune: full                   # linear | last_k | full
+  last_k: 4
+  dropout: 0.3
+  neck_dim: null
+  grad_checkpointing: true
+optim: {lr: 3.0e-4, backbone_lr_mult: 0.33, neck_lr_mult: 1.0, head_lr_mult: 3.0, llrd: 0.8, weight_decay: 0.01}
+train:
+  epochs: 30
+  patience: 7
+  batch_size: 16
+  eval_batch_size: 32
+  grad_accum: 2                    # effective batch 32
+  warmup_epochs: 1
+  min_lr_ratio: 0.01
+  sampler: pathology
+  num_workers: 4
+  amp: true
+  mtl_weighting: fixed
+  select_metric: pathology_auc
+  keep_checkpoints: true
+augment: {hflip: 0.5, vflip: 0.3, rotate: 20, translate: 0.08, scale: [0.85, 1.15], shear: 5,
+          brightness: 0.2, contrast: 0.3, gamma: [0.8, 1.25], p_gamma: 0.4, noise_std: 0.015, p_noise: 0.5}
+heads:
+  pathology:  {type: binary,  weight: 2.0, loss: {name: ce}}
+  assessment: {type: ordinal, weight: 1.0, classes: [0, 1, 2, 3, 4, 5], loss: {name: ce}}
+  subtlety:   {type: ordinal, weight: 0.5, classes: [1, 2, 3, 4, 5], loss: {name: ce}}
+  density:    {type: ordinal, weight: 1.0, classes: [1, 2, 3, 4], source: lesion, loss: {name: ce}}
+  shape:      {type: multilabel, weight: 1.0, min_count: 10, loss: {name: bce}}
+  margins:    {type: multilabel, weight: 1.0, min_count: 10, loss: {name: bce}}
+  calc_type:  {type: multilabel, weight: 0.5, min_count: 10, loss: {name: bce}}
+  calc_distribution: {type: multilabel, weight: 0.5, min_count: 10, loss: {name: bce}}

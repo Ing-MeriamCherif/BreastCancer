@@ -1,0 +1,4 @@
+_base_: ../base.yaml
+name: e2_effb5
+model: {backbone: timm:tf_efficientnet_b5.ns_jft_in1k}
+train: {batch_size: 8, grad_accum: 4}

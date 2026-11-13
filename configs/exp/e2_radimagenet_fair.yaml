@@ -1,0 +1,4 @@
+# Fair RadImageNet: own LR, full fine-tuning, BatchNorm statistics frozen
+_base_: ../base.yaml
+name: e2_radimagenet_fair
+model: {backbone: "radimagenet_resnet50:weights/RadImageNet_pytorch/ResNet50.pt", freeze_bn: true}

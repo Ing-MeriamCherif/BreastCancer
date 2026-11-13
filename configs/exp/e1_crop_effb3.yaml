@@ -1,0 +1,3 @@
+_base_: ../base.yaml
+name: e1_crop_effb3
+data: {input: crop}

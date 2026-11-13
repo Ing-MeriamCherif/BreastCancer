@@ -36,6 +36,10 @@ class Backbone(nn.Module):
     def extra_params(self) -> list[nn.Parameter]:
         return []
 
+    def always_frozen(self) -> list[nn.Parameter]:
+        """Parameters that must never be trained (e.g. frozen BatchNorm)."""
+        return []
+
     def enable_grad_checkpointing(self) -> None:
         pass
 
@@ -168,6 +172,11 @@ class RadImageNetResNet50(Backbone):
 
     def forward(self, x):
         return self.body(x).flatten(1)
+
+    def always_frozen(self):
+        if not self.freeze_bn:
+            return []
+        return [p for m in self.body.modules() if isinstance(m, nn.BatchNorm2d) for p in m.parameters()]
 
     def blocks(self):
         return [self.body[4], self.body[5], self.body[6], self.body[7]]

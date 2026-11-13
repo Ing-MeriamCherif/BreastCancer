@@ -1,0 +1,6 @@
+# lesion fields from the context crop, density from the whole (mirrored) mammogram
+_base_: ../base.yaml
+name: e1_ctx15_dualfull_effb3
+data: {input: ctx1.5, full_input: full}
+heads:
+  density: {source: full}

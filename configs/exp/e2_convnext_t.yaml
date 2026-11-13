@@ -1,0 +1,4 @@
+_base_: ../base.yaml
+name: e2_convnext_t
+model: {backbone: timm:convnext_tiny.fb_in22k}
+optim: {lr: 2.0e-4}

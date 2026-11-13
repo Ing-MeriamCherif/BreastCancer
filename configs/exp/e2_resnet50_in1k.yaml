@@ -1,0 +1,3 @@
+_base_: ../base.yaml
+name: e2_resnet50_in1k
+model: {backbone: timm:resnet50.a1_in1k}

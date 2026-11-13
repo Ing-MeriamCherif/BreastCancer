@@ -1,0 +1,2 @@
+_base_: ../legacy_base.yaml
+name: A_legacy_clip_custom

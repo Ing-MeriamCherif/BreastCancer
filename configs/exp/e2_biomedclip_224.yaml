@@ -1,0 +1,4 @@
+_base_: ../base.yaml
+name: e2_biomedclip_224
+model: {backbone: "open_clip:hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224", image_size: 224}
+optim: {lr: 1.0e-4, backbone_lr_mult: 0.2, neck_lr_mult: 1.0, head_lr_mult: 10.0, llrd: 0.75}

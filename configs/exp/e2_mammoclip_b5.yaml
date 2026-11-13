@@ -1,0 +1,7 @@
+# Mammo-CLIP image encoder (Ghosh et al., MICCAI 2024). Download the checkpoint from the
+# official repo (github.com/batmanlab/Mammo-CLIP) and `pip install efficientnet_pytorch`.
+# Check the normalisation used in the official repo and set model.mean/std accordingly.
+_base_: ../base.yaml
+name: e2_mammoclip_b5
+model: {backbone: "mammoclip:weights/mammoclip/b5-model-best-epoch-7.tar", arch: efficientnet-b5}
+train: {batch_size: 8, grad_accum: 4}

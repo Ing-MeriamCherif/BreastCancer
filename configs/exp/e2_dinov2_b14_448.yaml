@@ -1,0 +1,5 @@
+_base_: ../base.yaml
+name: e2_dinov2_b14_448
+model: {backbone: "timm:vit_base_patch14_dinov2.lvd142m", image_size: 448}
+optim: {lr: 1.0e-4, backbone_lr_mult: 0.2, neck_lr_mult: 1.0, head_lr_mult: 10.0, llrd: 0.75}
+train: {batch_size: 8, grad_accum: 4}

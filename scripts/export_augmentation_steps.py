@@ -18,7 +18,7 @@ Stages saved per image:
     step5_clip_normalized_tensor.pt  - the actual raw tensor fed to the model
 
 Usage:
-    python mammography_pipeline_export.py --input_dir /path/to/images --output_dir ./pipeline_output --seed 42
+    python scripts/export_augmentation_steps.py --input_dir /path/to/images --output_dir ./pipeline_output --seed 42
 """
 
 import argparse
@@ -37,24 +37,10 @@ except ImportError:
     CLIPProcessor = None
 
 SUPPORTED_EXTS = ('.png', '.jpg', '.jpeg', '.bmp', '.tif', '.tiff')
-
-# ============================================================
-# EDIT THESE TO POINT TO YOUR OWN FILE/FOLDER
-# ============================================================
-# Note: you gave a single .jpg file path, not a folder. This script
-# processes whole folders (so it can handle 1 or many images), so
-# INPUT_DIR should be the FOLDER containing that image - the script
-# will pick up every supported image inside it automatically.
-INPUT_DIR = r"D:\BreastCancer - Copie\data\jpeg\1.3.6.1.4.1.9590.100.1.2.100131208110604806117271735422083351547"
-OUTPUT_DIR = r"D:\BreastCancer - Copie\pipeline_output"
+# Defaults are relative to the repo; pass --input_dir / --output_dir to override.
+INPUT_DIR = "data/example_images"
+OUTPUT_DIR = "notebooks/legacy/pipeline_output"
 SEED = 42  # set to None for different random augmentation each run
-# ============================================================
-
-# ============================================================
-# EDIT THESE TWO LINES TO POINT TO YOUR OWN FOLDERS
-# ============================================================
-INPUT_DIR = r"D:\BreastCancer - Copie\data\jpeg\1.3.6.1.4.1.9590.100.1.2.100131208110604806117271735422083351547"
-OUTPUT_DIR = r"D:\BreastCancer - Copie\pipeline_output"       # <-- where the step PNGs will be saved
 # ============================================================
 
 # Fallback constants (used only if CLIPProcessor can't be downloaded,

@@ -1,0 +1,5 @@
+_base_: ../base.yaml
+name: e2_clip_b16_448
+model: {backbone: "hf_clip:openai/clip-vit-base-patch16", image_size: 448}
+optim: {lr: 1.0e-4, backbone_lr_mult: 0.2, neck_lr_mult: 1.0, head_lr_mult: 10.0, llrd: 0.75}
+train: {batch_size: 8, grad_accum: 4}
