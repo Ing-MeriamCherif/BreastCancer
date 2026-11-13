@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+data/
+cache/
+runs/
+weights/
+*.pt
+*.pth
+!notebooks/legacy/pipeline_output/**/*.pt
+.ipynb_checkpoints/

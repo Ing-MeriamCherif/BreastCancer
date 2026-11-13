@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bcr"
+version = "0.1.0"
+description = "Structured BI-RADS report prediction from mammography (CBIS-DDSM)"
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+where = ["src"]
